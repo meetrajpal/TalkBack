@@ -20,6 +20,7 @@ class Header extends Component {
             default:
                 return (
                     <>
+                        <li><a href="/surveys" className="btn-flat teal white-text">Dashboard</a></li>
                         <li>Available Credits: {this.props.auth.credits}&nbsp;&nbsp;&nbsp;</li>
                         <li><Payments /></li>
                         <li><a href="/api/logout" className="btn-flat teal white-text">Log out</a></li>
