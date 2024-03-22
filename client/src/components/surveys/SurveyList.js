@@ -1,6 +1,8 @@
 import { Component } from 'react';
+import './css/surveyListCssFile.css';
 import { connect } from 'react-redux';
 import { fetchSurveys } from '../../actions/actionindex';
+import { Link } from 'react-router-dom';
 
 class SurveyList extends Component {
 
@@ -8,29 +10,61 @@ class SurveyList extends Component {
         this.props.fetchSurveys();
     }
 
+    // deleteSurvey(surveyId){
+
+    // }
+
     renderContent() {
         return this.props.surveys.reverse().map((survey, keys) => {
             return (
-                <div key={keys} className="card blue-grey darken-1">
-                    <div className="card-content white-text">
-                        <span className="card-title">{survey.title}</span>
-                        <p>{survey.body}</p>
-                        <p className='right'>Sent on: {new Date(survey.dateSent).toLocaleDateString()}</p><br/>
-                        <p className='right'>Last Response on: {survey.lastResponse ? new Date(survey.lastResponse).toLocaleDateString() : "none"}</p>
+                <li key={keys} className="list-group-item">
+                    <div className="todo-indicator bg-success"></div>
+                    <div className="widget-content ms-2 p-0">
+                        <div className="widget-content-wrapper">
+                            <div className="widget-content-left">
+                                <div className="widget-heading fs-5">{survey.title}
+                                </div>
+                                <div className="widget-subheading"><i>Sent on: {survey.dateSent ? new Date(survey.dateSent).toLocaleDateString() : "none"}</i></div>
+                                <div className="widget-subheading"><i>Last Response on: {survey.lastResponse ? new Date(survey.lastResponse).toLocaleDateString() : "none"}</i></div>
+                            </div>
+                            <div className="widget-content-right ">
+                                <Link to={`/surveyInfo/${survey._id}`} className='btn-transition btn border-0 btn-outline-success' style={{borderRadius: "50px"}}><i className="bi bi-info-circle mb-1 fs-5"></i></Link>&nbsp;
+                                <button onClick={()=>{this.deleteSurvey(survey._id)}} className='btn-transition btn border-0 btn-outline-danger' style={{borderRadius: "50px"}}><i className="bi bi-trash mb-1 fs-5"></i></button>
+                            </div>
+                        </div>
                     </div>
-                    <div className="card-action center">
-                        <a>Yes: {survey.yes}</a>
-                        <a>No: {survey.no}</a>
-                    </div>
-                </div>
+                </li>
             );
         });
     }
 
     render() {
         return (
-            <div className='container'>
-                {this.renderContent()}
+            <div className="row d-flex justify-content-center m-5">
+                <div className="col-md-10">
+                    <div className="card-hover-shadow-2x mb-3 card">
+                        <div className="card-header-tab card-header">
+                            <div className="card-header-title fs-5 text-capitalize font-weight-normal"><i
+                                className="bi bi-list-task"></i>&nbsp;&nbsp;Survey Lists</div>
+                        </div>
+                        <div className="scroll-area-sm">
+                            <perfect-scrollbar className="ps-show-limits">
+                                <div style={{ position: "static" }} className="ps ps--active-y">
+                                    <div className="ps-content">
+                                        <ul className=" list-group list-group-flush">
+                                            {this.renderContent()}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </perfect-scrollbar>
+                        </div>
+                        <div className="d-block text-end card-footer">
+                            <Link className="btn" to="/surveys/new">
+                                <div className="roundedFixedBtn"><i className="bi bi-plus"></i></div>
+                            </Link>
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }

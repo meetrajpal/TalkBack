@@ -1,13 +1,15 @@
 import React from "react";
 
-function SurveyField ({ input, label, placeholder, meta: { error, touched } }) {
+function SurveyField({ input, label, placeholder, meta: { error, touched } }) {
     return (
-        <div>
-            <label><h5><b>{label}</b></h5></label>
-            <input {...input} placeholder={placeholder} />
-            <div className="red-text">
-                {touched && error}
-            </div>
+        <div class="form-group">
+            <label class="text-muted"><h5><b>{label}</b></h5></label>
+            <input {...input} placeholder={placeholder} class="form-control" />
+            <small id="emailHelp" class="form-text text-muted">
+                <div className="text-danger">
+                    {touched && error}
+                </div>
+            </small>
         </div>
     );
 }

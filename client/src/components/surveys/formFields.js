@@ -1,5 +1,5 @@
 const FIELDS = [
-    { label: "Survey Title", placeholder: "Enter the` title of survey", name: "title" },
+    { label: "Survey Title", placeholder: "Enter the title of survey", name: "title" },
     { label: "Subject Line", placeholder: "Enter the subject of email", name: "subject" },
     { label: "Recipients List", placeholder: "Enter the comma(,) separated list of recipients who are going to recieve this email", name: "recipients" },
     { label: "Email Body", placeholder: "Enter the body of survey", name: "body" }

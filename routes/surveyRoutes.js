@@ -17,21 +17,13 @@ module.exports = app => {
         res.send(surveysList);
     });
 
-    app.post('/api/surveys/webhooks', (req, res) => {
-        // console.log(req.body['event-data']);
-        const parsed = new Path('/api/surveys/:surveyId/:choice');
-        // const events = _.map(req.body, event => {
-        //     if (event.event === 'clicked') {
-        //         const matched = parsed.test(new URL(event.url).pathname);
-        //         if (matched)
-        //             return { email: event.recipient, surveyId: matched.surveyId, choice: matched.choice };
-        //     }
-        // });//.filter(event => event != undefined);
-        // // const obj = Object.assign({}, ...events);
+    app.get('/api/surveys/:surveyId', requireLogin, async (req, res) => {
+        const surveyInfo = await Survey.findOne({ _user: req.user.id, _id: req.params.surveyId });
+        res.send(surveyInfo);
+    });
 
-        // const compactEvents = _.compact(events);//removes undefined objects
-        // const uniqueEvents = _.uniqBy(compactEvents, 'email', 'surveyId');//removes duplicates
-        // console.log(uniqueEvents);
+    app.post('/api/surveys/webhooks', (req, res) => {
+        const parsed = new Path('/api/surveys/:surveyId/:choice');
 
         _.chain(req.body)//chain function takes an iterable variable and passes to the all functions called with it 
             .map(event => {
@@ -41,17 +33,30 @@ module.exports = app => {
                         return { email: event.recipient, surveyId: matched.surveyId, choice: matched.choice };
                 }
             })
+            // const events = _.map(req.body, event => {
+            //     if (event.event === 'clicked') {
+            //         const matched = parsed.test(new URL(event.url).pathname);
+            //         if (matched)
+            //             return { email: event.recipient, surveyId: matched.surveyId, choice: matched.choice };
+            //     }
+            // });
             .compact()//removes undefined objects
+            //.filter(event => event != undefined);
+            // const compactEvents = _.compact(events);//removes undefined objects
+
             .uniqBy('email', 'surveyId')//removes duplicates
+            // // const obj = Object.assign({}, ...events);
+            // const uniqueEvents = _.uniqBy(compactEvents, 'email', 'surveyId');//removes duplicates
             .each(({ email, surveyId, choice }) => {
                 Survey.updateOne({
                     _id: surveyId,
                     recipients: {
-                        $elemMatch: { email: email, gotResponse: false }
+                        $elemMatch: { email: email, gotResponse: false, responseValue: null }
                     }
                 }, {
                     $inc: { [choice]: 1 },
                     $set: { 'recipients.$.gotResponse': true },
+                    $set: { 'recipients.$.responseValue': choice },
                     lastResponse: new Date()
                 }).exec();
             })

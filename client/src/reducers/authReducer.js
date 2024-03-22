@@ -9,5 +9,5 @@ function fetchingUser (state = null, action){
             return state;
     }
 }
-// eslint-disable-next-line;
+
 export default fetchingUser;

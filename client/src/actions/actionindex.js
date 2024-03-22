@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FETCH_USER, FETCH_SURVEYS } from './types';
+import { FETCH_USER, FETCH_SURVEYS, FETCH_SURVEY_INFO } from './types';
 
 export const fetchUser = () =>
     async (dispatch) => {
@@ -25,4 +25,10 @@ export const fetchSurveys = () =>
     async (dispatch) => {
         const res = await axios.get('/api/surveys');
         dispatch({ type: FETCH_SURVEYS, payload: res.data });
+    };
+
+export const fetchSurveyInfo = (surveyId) =>
+    async (dispatch) => {
+        const res = await axios.get(`/api/surveys/${surveyId}`);
+        dispatch({ type: FETCH_SURVEY_INFO, payload: res.data });
     };

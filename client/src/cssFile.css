@@ -1,0 +1,24 @@
+
+.mainBody {
+    background-color: #efe0c9;
+}
+
+.fixedButton {
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+}
+
+.roundedFixedBtn {
+    height: 45px;
+    line-height: 45px;
+    width: 45px;
+    font-size: 2em;
+    font-weight: bold;
+    border-radius: 50%;
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+    padding-bottom: 10px;
+}

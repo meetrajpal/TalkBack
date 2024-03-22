@@ -11,7 +11,7 @@ module.exports = app => {
     });
 
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: 600, // amount in the smallest currency unit (e.g., 1000 rupees)
+      amount: 600, // amount in the smallest currency unit (e.g., 100 paise = 1 rupees)
       currency: 'inr', // Indian Rupees
       payment_method_types: ['card'],
       description: 'Payment for your product or service',

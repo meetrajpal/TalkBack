@@ -14,10 +14,10 @@ class Payments extends Component {
                 stripeKey={process.env.REACT_APP_STRIPE_KEY}
                 currency='INR'
             >
-                <button className="btn-flat teal white-text">
-                    Add credits
+                <button className="dropdown-item">
+                    Add credits &nbsp;&nbsp;<i className="bi bi-credit-card-fill"></i>
                 </button>
-
+                
             </StripeCheckout>
         );
     }
