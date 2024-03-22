@@ -1,7 +1,5 @@
 
-# TalkBack
-# talks for your business
-# A feedback web app
+# TalkBack talks for your business
 The live version of website is hosted here https://talkback.cyclic.app/
 
 This is a web app which provides service of sending, collecting and visualizing feedbacks.
