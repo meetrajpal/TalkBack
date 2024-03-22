@@ -13,6 +13,7 @@
 
 # production
 /build
+setupProxy.js
 
 # misc
 .DS_Store
