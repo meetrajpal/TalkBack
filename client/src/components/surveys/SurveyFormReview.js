@@ -20,21 +20,6 @@ const SurveyFormReview = ({ onCancel, formValues, submitSurvey }) => {
 
 
     return (
-        // <div className="container">
-        //     <h5>Confirm your details</h5>
-        //     {reviewFields}
-
-        //     <button
-        //         className="btn-flat red white-text"
-        //         onClick={onCancel}
-        //     >
-        //         <i className="material-icons left">chevron_left</i>Back
-        //     </button>
-
-        //     <button onClick={() => { submitSurvey(formValues, navigate) }} className="btn-flat right teal white-text" type="submit" name="action">SEND
-        //         <i className="material-icons right">email</i>
-        //     </button>
-        // </div>
 
         <div className="row mt-5">
             <div id="content" className="flex">
