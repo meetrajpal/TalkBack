@@ -4,13 +4,12 @@ import { connect } from 'react-redux';
 import FIELDS from './formFields';
 import * as actions from '../../actions/actionindex';
 import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 
 const SurveyFormReview = ({ onCancel, formValues, submitSurvey }) => {
     const reviewFields = _.map(FIELDS, ({ name, label }, keys) => {
         return (
-            <div key={keys} class="form-group">
-                <label class="text-muted"><h5><b>{label}</b></h5></label>
+            <div key={keys} className="form-group">
+                <label className="text-muted"><h5><b>{label}</b></h5></label>
                 <div className='fs-5'>{formValues[name]}</div><br />
             </div>
         );

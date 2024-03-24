@@ -8,8 +8,24 @@ const Mailer = require('../services/Mailer');
 const surveyTemplate = require('../services/emailTemplates/surveyTemplate');
 const { match } = require('assert');
 const Survey = mongoose.model('surveys');
+const User = mongoose.model('users');
 
 module.exports = app => {
+
+    app.delete('/api/surveys/delete/:surveyId', requireLogin, async (req, res) => {
+        const surveyInfo = await Survey.deleteOne({ _user: req.user.id, _id: req.params.surveyId });
+        if (surveyInfo.acknowledged) {
+            const userInfo = await User.updateOne({ _id: req.user.id }, { $inc: { surveyNumber: -1 } }).exec();
+            if (userInfo.acknowledged)
+                res.send(true);
+        }
+    });
+
+    app.put('/api/surveys/update/:surveyId/:title', requireLogin, async (req, res) => {
+        const surveyInfo = await Survey.updateOne({ _user: req.user.id, _id: req.params.surveyId }, { title: req.params.title });
+        if (surveyInfo.acknowledged)
+            res.send(true);
+    });
 
     app.get('/api/surveys', requireLogin, async (req, res) => {
         const surveysList = await Survey.find({ _user: req.user.id })
@@ -65,14 +81,19 @@ module.exports = app => {
     });
 
     app.get('/api/surveys/:surveyId/:choice', (req, res) => {
-        res.send("<h1><center>Thanks for your feedback!</center></h1>");
+        res.send(
+            `<center style="background-color: #EFBC9B"><h1>Thanks for your feedback!</h1><script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
+
+            <dotlottie-player src="https://lottie.host/61304419-35b9-4a9a-9749-14c995e2dabc/J2B0ejXOHO.json" background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></dotlottie-player></center>`
+        );
     });
 
     app.post('/api/surveys', requireLogin, requireCredits, async (req, res) => {
 
-        const { title, subject, body, recipients } = req.body;
+        const { from, title, subject, body, recipients } = req.body;
 
         const survey = new Survey({
+            from,
             title, //same as title: title,
             subject,
             body,
@@ -85,6 +106,7 @@ module.exports = app => {
             await mailer.send();
             await survey.save();
             req.user.credits -= 1;
+            req.user.surveyNumber += 1;
             const user = await req.user.save();
             res.send(user);
         } catch (err) {

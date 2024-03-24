@@ -3,6 +3,7 @@ import './css/surveyListCssFile.css';
 import { connect } from 'react-redux';
 import { fetchSurveys } from '../../actions/actionindex';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 class SurveyList extends Component {
 
@@ -10,9 +11,16 @@ class SurveyList extends Component {
         this.props.fetchSurveys();
     }
 
-    // deleteSurvey(surveyId){
-
-    // }
+    async deleteSurvey(surveyId) {
+        const confirmed = window.confirm("Are you sure you want to delete this survey?");
+        if (confirmed) {
+            const acknowledge = await axios.delete(`/api/surveys/delete/${surveyId}`);
+            if (acknowledge){
+                alert("Survey delted succesfully.");
+                this.props.fetchSurveys();
+            }
+        }
+    }
 
     renderContent() {
         return this.props.surveys.reverse().map((survey, keys) => {
@@ -28,8 +36,9 @@ class SurveyList extends Component {
                                 <div className="widget-subheading"><i>Last Response on: {survey.lastResponse ? new Date(survey.lastResponse).toLocaleDateString() : "none"}</i></div>
                             </div>
                             <div className="widget-content-right ">
-                                <Link to={`/surveyInfo/${survey._id}`} className='btn-transition btn border-0 btn-outline-success' style={{borderRadius: "50px"}}><i className="bi bi-info-circle mb-1 fs-5"></i></Link>&nbsp;
-                                <button onClick={()=>{this.deleteSurvey(survey._id)}} className='btn-transition btn border-0 btn-outline-danger' style={{borderRadius: "50px"}}><i className="bi bi-trash mb-1 fs-5"></i></button>
+                                <Link to={`/surveys/${survey._id}`} className='btn-transition btn btn-outline-success border-0' style={{ borderRadius: "50px"}}><i className="bi bi-info-circle mb-1 fs-5"></i></Link>&nbsp;
+                                <Link to={`/surveys/update/${survey._id}/${survey.title}`} className='btn-transition btn btn-outline-warning border-0' style={{ borderRadius: "50px"}}><i className="bi bi-pen mb-1 fs-5"></i></Link>&nbsp;
+                                <button onClick={() => { this.deleteSurvey(survey._id) }} className='btn-transition btn btn-outline-danger border-0' style={{ borderRadius: "50px"}}><i className="bi bi-trash mb-1 fs-5"></i></button>
                             </div>
                         </div>
                     </div>

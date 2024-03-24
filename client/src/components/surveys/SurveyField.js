@@ -2,10 +2,10 @@ import React from "react";
 
 function SurveyField({ input, label, placeholder, meta: { error, touched } }) {
     return (
-        <div class="form-group">
-            <label class="text-muted"><h5><b>{label}</b></h5></label>
-            <input {...input} placeholder={placeholder} class="form-control" />
-            <small id="emailHelp" class="form-text text-muted">
+        <div className="form-group">
+            <label className="text-muted"><h5><b>{label}</b></h5></label>
+            <input {...input} placeholder={placeholder} className="form-control" style={{"background-color": "#FBF3D5"}} />
+            <small id="emailHelp" className="form-text text-muted">
                 <div className="text-danger">
                     {touched && error}
                 </div>

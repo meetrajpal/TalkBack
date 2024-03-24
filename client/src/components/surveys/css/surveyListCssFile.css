@@ -13,21 +13,24 @@ i {
     font-style: italic;
 }
 
-.container{
-    margin-top:100px;
+.container {
+    margin-top: 100px;
 }
 
 .card {
+    background-color: #FBF3D5;
     box-shadow: 0 0.46875rem 2.1875rem rgba(4, 9, 20, 0.03), 0 0.9375rem 1.40625rem rgba(4, 9, 20, 0.03), 0 0.25rem 0.53125rem rgba(4, 9, 20, 0.05), 0 0.125rem 0.1875rem rgba(4, 9, 20, 0.03);
     border-width: 0;
     transition: all .2s;
 }
 
 .card-header:first-child {
+    background-color: #FBF3D5;
     border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
 }
 
 .card-header {
+    background-color: #FBF3D5;
     display: flex;
     align-items: center;
     border-bottom-width: 1px;
@@ -37,10 +40,12 @@ i {
     height: 3.5rem;
     background-color: #fff;
 }
-.widget-subheading{
+
+.widget-subheading {
     color: #858a8e;
     font-size: 14px;
 }
+
 .card-header.card-header-tab .card-header-title {
     display: flex;
     align-items: center;
@@ -73,16 +78,17 @@ i {
 }
 
 .list-group-item {
+    background-color: #FBF3D5;
     position: relative;
     display: block;
     padding: 0.75rem 1.25rem;
     margin-bottom: -1px;
-    background-color: #fff;
     border: 1px solid rgba(0, 0, 0, 0.125);
 }
 
 .list-group {
     display: flex;
+    background-color: #FBF3D5;
     flex-direction: column;
     padding-left: 0;
     margin-bottom: 0;
@@ -105,11 +111,13 @@ i {
 
 .widget-content {
     padding: 1rem;
+    background-color: #FBF3D5;
     flex-direction: row;
     align-items: center;
 }
 
 .widget-content .widget-content-wrapper {
+    background-color: #FBF3D5;
     display: flex;
     flex: 1;
     position: relative;
@@ -151,17 +159,20 @@ i {
     background-color: #3ac47d;
     border-color: #3ac47d;
 }
+
 .btn-primary {
     color: #fff;
     background-color: #3f6ad8;
     border-color: #3f6ad8;
 }
-.btn { 
+
+.btn {
     position: relative;
     transition: color 0.15s, background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
     outline: none !important;
 }
 
-.card-footer{
-    background-color: #fff;
+.card-footer {
+    background-color: #FBF3D5;
+
 }

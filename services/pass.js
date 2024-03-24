@@ -25,12 +25,16 @@ passport.use(
         },
         //asyncronized funtion internally works as promise
         async (accessTkn, refreshTkn, profile, done) => {
-            const existUser = await User.findOne({ googleID: profile.id })
+            const existUser = await User.findOne({ googleID: profile.id });
 
             if (existUser)
                 return done(null, existUser);
 
-            const user = await new User({ googleID: profile.id, name: profile.displayName }).save();
+            let email = "none";
+            if(profile._json.email)
+                email = profile._json.email;
+
+            const user = await new User({ googleID: profile.id, name: profile.displayName, emailId: email }).save();
             done(null, user);
 
         }

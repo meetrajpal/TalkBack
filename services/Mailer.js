@@ -4,8 +4,8 @@ const keys = require("../config/keys");
 const mg = mailgun({ apiKey: keys.mailgun, domain: keys.mailgunDomain });
 
 class Mailer {
-    constructor({ subject, body, recipients }, content) {
-        this.from_email = "<no-reply@feedbackapp>";
+    constructor({ from, subject, body, recipients }, content) {
+        this.from_email = from;
         this.subject = subject;
         this.text = body.toJSON;
         this.html = content;

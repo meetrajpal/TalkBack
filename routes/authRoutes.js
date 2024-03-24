@@ -1,8 +1,9 @@
 const passport = require("passport");
+const notRequiredLogin = require("../middlewares/notRequiredLogin");
 
 module.exports = (app) => {
     app.get(
-        '/auth/google',
+        '/auth/google', notRequiredLogin,
         passport.authenticate('google', {
             scope: ['profile', 'email']
         })

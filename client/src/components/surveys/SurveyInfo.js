@@ -1,9 +1,9 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchSurveyInfo } from '../../actions/actionindex';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Chart as ChartJS, defaults } from 'chart.js/auto';
+import { defaults } from 'chart.js/auto';
 import { Bar, Doughnut, Pie, PolarArea } from 'react-chartjs-2';
 
 defaults.maintainAspectRatio = false;
@@ -22,58 +22,69 @@ class SurveyInfo extends Component {
 
     renderContent() {
         return (
-            <div className='row'>
-                <div className="card m-3 col-12">
+            <div className='row d-flex justify-content-center m-0'>
+                <div className="card my-2 col-10">
                     <div className="card-body">
-                        <span className="card-title">{this.props.surveyInfo.title}</span>
-                        <p>{this.props.surveyInfo.body}</p>
+                        <span className="card-title">Survey Title: {this.props.surveyInfo.title}</span>
+                        <p>Survey Body: {this.props.surveyInfo.body}</p>
                         Sent on: {new Date(this.props.surveyInfo.dateSent).toLocaleDateString()}<br />
                         Last Response on: {this.props.surveyInfo.lastResponse ? new Date(this.props.surveyInfo.lastResponse).toLocaleDateString() : "none"}<br />
-
-                        Yes: {this.props.surveyInfo.yes} <br />
-                        No: {this.props.surveyInfo.no}
                     </div>
                 </div>
 
                 <div className='row d-flex justify-content-center'>
-                    <div className="card m-3 col-5">
+                    <div className="card my-3 me-3 col-5">
                         <div className="card-body">
-                            <span className="card-title">Recipients</span>
-                            <ul class="list-group list-group-numbered">
-                                {this.props.surveyInfo.recipients ? this.props.surveyInfo.recipients.map((data, keys) => {
-                                    return(
-                                        <li key={keys} className='list-group-item'>{data.email}</li>
-                                    );
-                                }):""}
-                            </ul>
-                        </div>
-                    </div>
-                    <div className="card m-3 col-5">
-                        <div className="card-body">
-                            <span className="card-title">Choice</span>
-                            <ul class="list-group">
-                                {this.props.surveyInfo.recipients ? this.props.surveyInfo.recipients.map((data, keys) => {
-                                    return(
-                                        <li key={keys} className='list-group-item'>{data.responseValue}</li>
-                                    );
-                                }):""}
-                            </ul>
+                            <span className="card-title"><strong className='fs-5'>Response summary</strong></span>
+                            <div className='table-responsive'>
+                                <table className='table mt-2'>
+                                    <thead>
+                                        <tr>
+                                            <th scope='col'>Response</th>
+                                            <th scope='col'>Total Count</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>Very Bad</td><td>{this.props.surveyInfo.veryBad}</td></tr>
+                                        <tr><td>Bad</td><td>{this.props.surveyInfo.bad}</td></tr>
+                                        <tr><td>Good</td><td>{this.props.surveyInfo.good}</td></tr>
+                                        <tr><td>Very Good</td><td>{this.props.surveyInfo.veryGood}</td></tr>
+                                    </tbody>
+                                </table>
+                                <table className='table'>
+                                    <thead>
+                                        <tr>
+                                            <th scope='col'>Recipients</th>
+                                            <th scope='col'>Response</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {this.props.surveyInfo.recipients ? this.props.surveyInfo.recipients.map((data, keys) => {
+                                            return (
+                                                <tr key={keys}><td>{data.email}</td><td>{data.responseValue}</td></tr>
+                                            );
+                                        }) : ""}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div className='row d-flex justify-content-center' style={{ height: "auto" }}>
-                    <div className='m-3 card col-5 p-3'>
+                    <div className='mt-3 card col-8 p-3'>
                         <Bar
                             data={{
-                                labels: ['yes', 'no'],
+                                labels: ['Very Bad', 'Bad', 'Good', 'Very Good'],
                                 datasets: [
                                     {
                                         label: ['response'],
-                                        data: [this.props.surveyInfo.yes, this.props.surveyInfo.no],
+                                        data: [this.props.surveyInfo.veryBad, this.props.surveyInfo.bad, this.props.surveyInfo.good, this.props.surveyInfo.veryGood],
                                         backgroundColor: [
-                                            "rgba(157, 245, 39, 0.8)",
-                                            'rgba(245, 105, 39, 0.8)'
+                                            "#003f5c",
+                                            "#7a5195",
+                                            "#ef5675",
+                                            "#ffa600"
                                         ]
                                     }
                                 ]
@@ -87,22 +98,28 @@ class SurveyInfo extends Component {
                             }}
                         />
                     </div>
+                </div>
 
-                    <div className='m-3 card col-5 p-3'>
+                <div className='row d-flex justify-content-center' style={{ height: "auto" }}>
+                    <div className='mt-3 card col-8 p-3'>
                         <Doughnut
                             data={{
-                                labels: ['yes', 'no'],
+                                labels: ['Very Bad', 'Bad', 'Good', 'Very Good'],
                                 datasets: [
                                     {
                                         label: ['response'],
-                                        data: [this.props.surveyInfo.yes, this.props.surveyInfo.no],
+                                        data: [this.props.surveyInfo.veryBad, this.props.surveyInfo.bad, this.props.surveyInfo.good, this.props.surveyInfo.veryGood],
                                         backgroundColor: [
-                                            "rgba(157, 245, 39, 0.8)",
-                                            'rgba(245, 105, 39, 0.8)'
+                                            "#003f5c",
+                                            "#7a5195",
+                                            "#ef5675",
+                                            "#ffa600"
                                         ],
                                         borderColor: [
-                                            "rgba(157, 245, 39, 0.8)",
-                                            'rgba(245, 105, 39, 0.8)'
+                                            "#003f5c",
+                                            "#7a5195",
+                                            "#ef5675",
+                                            "#ffa600"
                                         ]
                                     },
                                 ]
@@ -116,22 +133,28 @@ class SurveyInfo extends Component {
                             }}
                         />
                     </div>
+                </div>
 
-                    <div className='m-3 card col-5 p-3'>
+                <div className='row d-flex justify-content-center' style={{ height: "auto" }}>
+                    <div className='mt-3 card col-8 p-3'>
                         <Pie
                             data={{
-                                labels: ['yes', 'no'],
+                                labels: ['Very Bad', 'Bad', 'Good', 'Very Good'],
                                 datasets: [
                                     {
                                         label: ['response'],
-                                        data: [this.props.surveyInfo.yes, this.props.surveyInfo.no],
+                                        data: [this.props.surveyInfo.veryBad, this.props.surveyInfo.bad, this.props.surveyInfo.good, this.props.surveyInfo.veryGood],
                                         backgroundColor: [
-                                            "rgba(157, 245, 39, 0.8)",
-                                            'rgba(245, 105, 39, 0.8)'
+                                            "#003f5c",
+                                            "#7a5195",
+                                            "#ef5675",
+                                            "#ffa600"
                                         ],
                                         borderColor: [
-                                            "rgba(157, 245, 39, 0.8)",
-                                            'rgba(245, 105, 39, 0.8)'
+                                            "#003f5c",
+                                            "#7a5195",
+                                            "#ef5675",
+                                            "#ffa600"
                                         ]
                                     },
                                 ]
@@ -145,18 +168,22 @@ class SurveyInfo extends Component {
                             }}
                         />
                     </div>
+                </div>
 
-                    <div className='m-3 card col-5 p-3'>
+                <div className='row d-flex justify-content-center' style={{ height: "auto" }}>
+                    <div className='mt-3 card col-8 p-3'>
                         <PolarArea
                             data={{
-                                labels: ['yes', 'no'],
+                                labels: ['Very Bad', 'Bad', 'Good', 'Very Good'],
                                 datasets: [
                                     {
                                         label: 'response',
-                                        data: [this.props.surveyInfo.yes, this.props.surveyInfo.no],
+                                        data: [this.props.surveyInfo.veryBad, this.props.surveyInfo.bad, this.props.surveyInfo.good, this.props.surveyInfo.veryGood],
                                         backgroundColor: [
-                                            "rgba(157, 245, 39, 0.8)",
-                                            'rgba(245, 105, 39, 0.8)'
+                                            "#003f5c",
+                                            "#7a5195",
+                                            "#ef5675",
+                                            "#ffa600"
                                         ]
                                     }
                                 ]
@@ -171,13 +198,13 @@ class SurveyInfo extends Component {
                         />
                     </div>
                 </div>
-            </div>
+            </div >
         );
     }
 
     render() {
         return (
-            <div className='container'>
+            <div className=''>
                 {this.renderContent()}
             </div>
         );
