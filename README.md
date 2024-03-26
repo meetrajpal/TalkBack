@@ -1,6 +1,6 @@
 <h1>
   <center>
-    <img src="https://github.com/meetrajpal/TalkBack/blob/main/client/public/img/Asset%201.png" />
+    <img src="https://github.com/meetrajpal/TalkBack/blob/main/client/public/img/Asset%201.png" height=100 width=100 />
     TalkBack
   </center>
 </h1>
