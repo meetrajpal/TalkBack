@@ -1,4 +1,8 @@
-
+<h1>
+  <center>
+    <img src="https://github.com/meetrajpal/TalkBack/client/public/img/Asset 1.png" />
+  </center>
+</h1>
 # TalkBack talks for your business
 The live version of website is hosted here https://talkback.cyclic.app/
 
