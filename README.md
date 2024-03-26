@@ -1,8 +1,6 @@
-<h1>
-  <center>
-    <img src="https://github.com/meetrajpal/TalkBack/blob/main/client/public/img/Asset%201.png" height=100 width=100 />
+<h1 align="center">
+    <img src="https://github.com/meetrajpal/TalkBack/blob/main/client/public/img/Asset%201.png"/>
     TalkBack
-  </center>
 </h1>
 # TalkBack talks for your business
 The live version of website is hosted here https://talkback.cyclic.app/
