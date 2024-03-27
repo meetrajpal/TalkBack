@@ -1,5 +1,9 @@
-
-# TalkBack talks for your business
+<h1 align="center">
+    <img src="https://github.com/meetrajpal/TalkBack/blob/main/client/public/img/Asset%201.png"/>
+</h1>
+<h1 align="center">
+    TalkBack, talks for your business  
+</h1>
 The live version of website is hosted here https://talkback.cyclic.app/
 
 This is a web app which provides service of sending, collecting and visualizing feedbacks.
