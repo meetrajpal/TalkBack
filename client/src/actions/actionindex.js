@@ -23,7 +23,6 @@ export const submitSurvey = (values, navigate, setInsufficientCreditsError) =>
         } catch (error) {
             if (error.response && error.response.status === 403) {
                 setInsufficientCreditsError(error.response.data.error);
-                // dispatch({ type: 'INSUFFICIENT_CREDITS_ERROR', payload: error.response.data.error });
             }
         };
     }
