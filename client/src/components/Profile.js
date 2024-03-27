@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 class Profile extends Component {
 
     async handleDelete(userId) {
-        const confirmed = window.confirm("Are you sure you want to delete this account?");
+        const confirmed = window.confirm("Are you sure you want to delete this account? Please notice that deleting this account will also delete any survey created with this account and also any credits in the account will be non-refundable and deleted too.");
         if (confirmed) {
             const acknowledge = await axios.delete(`/api/users/delete/${userId}`);
             if (acknowledge){

@@ -14,12 +14,19 @@ export const handleToken = (token) =>
         dispatch({ type: FETCH_USER, payload: res.data });
     }
 
-export const submitSurvey = (values, navigate) =>
+export const submitSurvey = (values, navigate, setInsufficientCreditsError) =>
     async (dispatch) => {
-        const res = await axios.post('/api/surveys', values);
-        dispatch({ type: FETCH_USER, payload: res.data });
-        navigate('/surveys');
-    };
+        try {
+            const res = await axios.post('/api/surveys', values);
+            dispatch({ type: FETCH_USER, payload: res.data });
+            navigate('/surveys');
+        } catch (error) {
+            if (error.response && error.response.status === 403) {
+                setInsufficientCreditsError(error.response.data.error);
+                // dispatch({ type: 'INSUFFICIENT_CREDITS_ERROR', payload: error.response.data.error });
+            }
+        };
+    }
 
 export const fetchSurveys = () =>
     async (dispatch) => {

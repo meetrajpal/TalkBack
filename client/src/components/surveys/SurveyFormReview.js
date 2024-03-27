@@ -4,8 +4,12 @@ import { connect } from 'react-redux';
 import FIELDS from './formFields';
 import * as actions from '../../actions/actionindex';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const SurveyFormReview = ({ onCancel, formValues, submitSurvey }) => {
+
+    const [insufficientCreditsError, setInsufficientCreditsError] = useState(null);
+
     const reviewFields = _.map(FIELDS, ({ name, label }, keys) => {
         return (
             <div key={keys} className="form-group">
@@ -30,6 +34,11 @@ const SurveyFormReview = ({ onCancel, formValues, submitSurvey }) => {
                                     <div className="card-header fs-5"><strong>Confirm your details</strong></div>
                                     <div className="card-body">
                                         {reviewFields}
+                                        {insufficientCreditsError && (
+                                            <div className="alert alert-danger" role="alert">
+                                                {insufficientCreditsError}
+                                            </div>
+                                        )}
                                         <div className="row">
                                             <div className="col-6">
                                                 <button
@@ -42,7 +51,7 @@ const SurveyFormReview = ({ onCancel, formValues, submitSurvey }) => {
                                             </div>
                                             <div className="col-6 text-end">
 
-                                                <button onClick={() => { submitSurvey(formValues, navigate) }} className="btn-success btn" type="submit" name="action">SEND &nbsp;<i className="bi bi-envelope"></i>
+                                                <button onClick={() => { submitSurvey(formValues, navigate, setInsufficientCreditsError) }} className="btn-success btn" type="submit" name="action">SEND &nbsp;<i className="bi bi-envelope"></i>
                                                 </button>
                                             </div>
                                         </div>
