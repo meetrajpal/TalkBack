@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as actions from '../actions/actionindex';
 
 import Header from './Header';
+import Footer from './Footer';
 import Landing from './Landing';
 import Dashboard from './Dashboard';
 import SurveyNew from './surveys/SurveyNew';
@@ -34,6 +35,7 @@ class App extends Component {
                         <Route path='/surveys/update/:surveyId/:surveyTitle' element={<SurveyUpdate />} />
                         <Route path='/users/update/:userId/:userName/:userMail' element={< ProfileUpdate />} />
                     </Routes>
+                    <Footer/>
                 </div>
 
             </div>
