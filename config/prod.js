@@ -7,5 +7,6 @@ module.exports = {
     stripePrivateKey: process.env.STRIPE_PRIVATE_KEY,
     mailgun: process.env.MAILGUN,
     mailgunDomain: process.env.MAILGUN_DOMAIN,
-    redirectDomain: process.env.REDIRECT_DOMAIN
+    redirectDomain: process.env.REDIRECT_DOMAIN,
+    contactMail: process.env.CONTACT_MAIL
 }

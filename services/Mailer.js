@@ -27,10 +27,11 @@ class Mailer {
             html: this.html
         };
 
-        const response = await mg.messages().send(data, function (error, body) {
-            console.log(body);
-        });
-        return response;
+        const response = await mg.messages().send(data);
+        if (response.id)
+            return response;
+        else
+            return "Error sending mail.";
     }
 }
 
