@@ -4,7 +4,7 @@
 <h1 align="center">
     TalkBack, talks for your business  
 </h1>
-The live version of website is hosted here [https://talkback.cyclic.app/](https://talkback.onrender.com/)
+The live version of website is hosted here https://talkback.onrender.com/
 
 This is a web app which provides service of sending, collecting and visualizing feedbacks.
 
