@@ -29,9 +29,7 @@ class SurveyForm extends Component {
                                         <div className="card-body">
                                             <form onSubmit={this.props.handleSubmit(this.props.onSurveySubmit)}>
                                                 {this.renderFields()}
-                                                <div className="alert alert-danger" role="alert">
-                                                    In this project, for mail service - Mailgun mail service is used. So while in free account, we can send upto only 5 email users which also should be first authorised by mailgun.
-                                                </div>
+                                                
                                                 <div className="row">
                                                     <div className="col-6">
                                                         <Link to="/surveys" className="btn btn-danger">Cancel <i className="bi bi-x"></i></Link>
