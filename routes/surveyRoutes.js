@@ -42,7 +42,7 @@ module.exports = app => {
 
     app.post('/api/surveys/webhooks', (req, res) => {
         // const signature = req.body.signature;
-        // const apiKey = "3902a98825010cf4a0764829f7ec6fe6"; // Ensure this is set in .env
+        // const apiKey = ""; // Ensure this is set in .env
 
         // const hmac = crypto.createHmac('sha256', apiKey);
         // hmac.update(signature.timestamp + signature.token);
