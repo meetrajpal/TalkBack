@@ -8,5 +8,6 @@ module.exports = {
     mailgun: process.env.MAILGUN,
     mailgunDomain: process.env.MAILGUN_DOMAIN,
     redirectDomain: process.env.REDIRECT_DOMAIN,
-    contactMail: process.env.CONTACT_MAIL
+    contactMail: process.env.CONTACT_MAIL,
+    brevo: process.env.BREVO
 }

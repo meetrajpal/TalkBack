@@ -9,6 +9,8 @@ const surveyTemplate = require('../services/emailTemplates/surveyTemplate');
 const { match } = require('assert');
 const Survey = mongoose.model('surveys');
 const User = mongoose.model('users');
+const crypto = require('crypto');
+const keys = require("../config/keys");
 
 module.exports = app => {
 
@@ -39,44 +41,89 @@ module.exports = app => {
     });
 
     app.post('/api/surveys/webhooks', (req, res) => {
+        // const signature = req.body.signature;
+        // const apiKey = "3902a98825010cf4a0764829f7ec6fe6"; // Ensure this is set in .env
+
+        // const hmac = crypto.createHmac('sha256', apiKey);
+        // hmac.update(signature.timestamp + signature.token);
+        // const expectedSignature = hmac.digest('hex');
+
+        // if (expectedSignature !== signature.signature) {
+        //     console.log("Invalid webhook signature");
+        //     return res.status(403).send("Unauthorized");
+        // }
+
+        // console.log("Webhook Verified:", JSON.stringify(req.body, null, 2));
+        // console.log(req.body);
         const parsed = new Path('/api/surveys/:surveyId/:choice');
+        // _.chain(req.body)//chain function takes an iterable variable and passes to the all functions called with it 
+        //     .map(event => {
+        //         if (event.event === 'clicked') {
+        //             console.log(event.event.url);
+        //             const matched = parsed.test(new URL(event.url).pathname);
 
-        _.chain(req.body)//chain function takes an iterable variable and passes to the all functions called with it 
-            .map(event => {
-                if (event.event === 'clicked') {
-                    const matched = parsed.test(new URL(event.url).pathname);
-                    if (matched)
-                        return { email: event.recipient, surveyId: matched.surveyId, choice: matched.choice };
+        //             if (matched)
+        //                 return { email: event.recipient, surveyId: matched.surveyId, choice: matched.choice };
+        //         }
+        //     })
+        //     // const events = _.map(req.body, event => {
+        //     //     if (event.event === 'clicked') {
+        //     //         const matched = parsed.test(new URL(event.url).pathname);
+        //     //         if (matched)
+        //     //             return { email: event.recipient, surveyId: matched.surveyId, choice: matched.choice };
+        //     //     }
+        //     // });
+        //     .compact()//removes undefined objects
+        //     //.filter(event => event != undefined);
+        //     // const compactEvents = _.compact(events);//removes undefined objects
+
+        //     .uniqBy('email', 'surveyId')//removes duplicates
+        //     // // const obj = Object.assign({}, ...events);
+        //     // const uniqueEvents = _.uniqBy(compactEvents, 'email', 'surveyId');//removes duplicates
+        //     .each(({ email, surveyId, choice }) => {
+        //         Survey.updateOne({
+        //             _id: surveyId,
+        //             recipients: {
+        //                 $elemMatch: { email: email, gotResponse: false, responseValue: null }
+        //             }
+        //         }, {
+        //             $inc: { [choice]: 1 },
+        //             $set: { 'recipients.$.gotResponse': true },
+        //             $set: { 'recipients.$.responseValue': choice },
+        //             lastResponse: new Date()
+        //         }).exec();
+        //     })
+        //     .value();
+
+
+            if (req.body.event === 'click') {
+                // console.log(req.body.link);
+                const matched = parsed.test(new URL(req.body.link).pathname);
+            
+                if (matched) {
+                    const email = req.body.email;
+                    const surveyId = matched.surveyId;
+                    const choice = matched.choice;
+            
+                    Survey.updateOne(
+                        {
+                            _id: surveyId,
+                            recipients: {
+                                $elemMatch: { email: email, gotResponse: false, responseValue: null }
+                            }
+                        },
+                        {
+                            $inc: { [choice]: 1 },
+                            $set: { 
+                                'recipients.$.gotResponse': true,
+                                'recipients.$.responseValue': choice 
+                            },
+                            lastResponse: new Date()
+                        }
+                    ).exec();
                 }
-            })
-            // const events = _.map(req.body, event => {
-            //     if (event.event === 'clicked') {
-            //         const matched = parsed.test(new URL(event.url).pathname);
-            //         if (matched)
-            //             return { email: event.recipient, surveyId: matched.surveyId, choice: matched.choice };
-            //     }
-            // });
-            .compact()//removes undefined objects
-            //.filter(event => event != undefined);
-            // const compactEvents = _.compact(events);//removes undefined objects
-
-            .uniqBy('email', 'surveyId')//removes duplicates
-            // // const obj = Object.assign({}, ...events);
-            // const uniqueEvents = _.uniqBy(compactEvents, 'email', 'surveyId');//removes duplicates
-            .each(({ email, surveyId, choice }) => {
-                Survey.updateOne({
-                    _id: surveyId,
-                    recipients: {
-                        $elemMatch: { email: email, gotResponse: false, responseValue: null }
-                    }
-                }, {
-                    $inc: { [choice]: 1 },
-                    $set: { 'recipients.$.gotResponse': true },
-                    $set: { 'recipients.$.responseValue': choice },
-                    lastResponse: new Date()
-                }).exec();
-            })
-            .value();
+            }
+        
         res.send({});
     });
 
